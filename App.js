@@ -10,6 +10,11 @@ import UserScreen from './screens/UserScreen';
 import ChatScreen from './screens/ChatScreen';
 import OnlineUsersScreen from './screens/OnlineUsersScreen';
 import GroupsScreen from './screens/GroupsScreen';
+import AppointmentScreen from './screens/AppointmentScreen';
+import HomeScreen from './screens/HomeScreen';
+import ServicesScreen from './screens/ServicesScreen';
+import AboutScreen from './screens/AboutScreen';
+import ProductsScreen from './screens/ProductsScreen';
 
 const Stack = createStackNavigator();
 
@@ -106,6 +111,18 @@ export default function App() {
                 return <ChatScreen {...props} user={currentUsername} mechanic={otherUser} goBack={() => props.navigation.goBack()} />;
               }}
             </Stack.Screen>
+            <Stack.Screen name="Appointment">
+              {props => (
+                <AppointmentScreen
+                  {...props}
+                  currentUsername={currentUsername}
+                />
+              )}
+            </Stack.Screen>
+            <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen name="Services" component={ServicesScreen} />
+            <Stack.Screen name="About" component={AboutScreen} />
+            <Stack.Screen name="Products" component={ProductsScreen} />
           </>
         )}
       </Stack.Navigator>
