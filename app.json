@@ -1,12 +1,7 @@
 {
-  "name": "PowerCar",
-  "displayName": "PowerCar",
-  "extra": {
-    "eas": {
-      "projectId": "06e03514-046f-410b-95d0-ca5cb1a83007"
-    }
-  },
   "expo": {
+    "name": "PowerCar",
+    "displayName": "PowerCar",
     "android": {
       "package": "com.pipingo.powercar"
     },

@@ -46,16 +46,18 @@ export default function LoginScreen({ setRole, goToRegister, users, goBack, setC
 
         <Text style={styles.title}>PowerCar Login</Text>
 
+        <Text style={styles.label}>Nombre de usuario</Text>
         <TextInput
           style={styles.input}
-          placeholder="Usuario"
+          placeholder="Ingresa tu nombre de usuario"
           value={username}
           onChangeText={setUsername}
         />
 
+        <Text style={styles.label}>Contraseña</Text>
         <TextInput
           style={styles.input}
-          placeholder="Contraseña"
+          placeholder="Ingresa tu contraseña"
           value={password}
           onChangeText={setPassword}
           secureTextEntry
@@ -102,6 +104,15 @@ const styles = StyleSheet.create({
     marginBottom: 40, 
     color: '#333', 
     textAlign: 'center' 
+  },
+  label: {
+    width: '100%',
+    maxWidth: 300,
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#555',
+    marginBottom: 5,
+    marginTop: 5
   },
   input: { 
     width: '100%', 

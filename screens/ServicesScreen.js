@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: '#007bff',
+    color: '#000',
     textAlign: 'center',
     marginBottom: 30
   },
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#007bff',
+    color: '#000',
     marginBottom: 10
   },
 
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
   serviceTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#007bff'
+    color: '#000'
   },
 
   servicePrice: {
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
 
   text: {
     fontSize: 16,
-    color: '#333',
+    color: '#000',
     lineHeight: 24
   },
 

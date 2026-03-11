@@ -3,10 +3,13 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Alert,
 import { db } from '../firebaseConfig';
 import { collection, getDocs, addDoc } from 'firebase/firestore';
 import { Ionicons } from '@expo/vector-icons';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 export default function AppointmentScreen({ navigation, currentUsername }) {
 
   const [appointments, setAppointments] = useState([]);
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [showTimePicker, setShowTimePicker] = useState(false);
 
   const [form, setForm] = useState({
     name: '',
@@ -17,6 +20,33 @@ export default function AppointmentScreen({ navigation, currentUsername }) {
     vehicle: '',
     plate: ''
   });
+
+  const formatDate = (date) => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+
+  const handleDateChange = (event, selectedDate) => {
+    setShowDatePicker(false);
+    if (selectedDate) {
+      setForm({ ...form, date: formatDate(selectedDate) });
+    }
+  };
+
+  const formatTime = (date) => {
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    return `${hours}:${minutes}`;
+  };
+
+  const handleTimeChange = (event, selectedTime) => {
+    setShowTimePicker(false);
+    if (selectedTime) {
+      setForm({ ...form, time: formatTime(selectedTime) });
+    }
+  };
 
   useEffect(() => {
     loadAppointments();
@@ -159,20 +189,44 @@ export default function AppointmentScreen({ navigation, currentUsername }) {
         />
 
         <Text style={styles.label}>Fecha</Text>
-        <TextInput
-          style={styles.input}
-          value={form.date}
-          placeholder="aaaa-mm-dd"
-          onChangeText={(text) => setForm({ ...form, date: text })}
-        />
+        <TouchableOpacity style={styles.input} onPress={() => setShowDatePicker(true)}>
+          <Text style={form.date ? styles.inputText : styles.placeholderText}>
+            {form.date || 'Seleccionar fecha'}
+          </Text>
+        </TouchableOpacity>
+        {showDatePicker && (
+          <DateTimePicker
+            value={form.date ? new Date(`${form.date}T00:00:00`) : new Date()}
+            mode="date"
+            display="default"
+            minimumDate={new Date()}
+            onChange={handleDateChange}
+          />
+        )}
 
         <Text style={styles.label}>Hora</Text>
-        <TextInput
-          style={styles.input}
-          value={form.time}
-          placeholder="HH:MM"
-          onChangeText={(text) => setForm({ ...form, time: text })}
-        />
+        <TouchableOpacity style={styles.input} onPress={() => setShowTimePicker(true)}>
+          <Text style={form.time ? styles.inputText : styles.placeholderText}>
+            {form.time || 'Seleccionar hora'}
+          </Text>
+        </TouchableOpacity>
+        {showTimePicker && (
+          <DateTimePicker
+            value={(() => {
+              if (form.time) {
+                const [h, m] = form.time.split(':');
+                const d = new Date();
+                d.setHours(parseInt(h), parseInt(m), 0, 0);
+                return d;
+              }
+              return new Date();
+            })()}
+            mode="time"
+            display="default"
+            is24Hour={true}
+            onChange={handleTimeChange}
+          />
+        )}
 
         <Text style={styles.label}>Vehículo</Text>
         <TextInput
@@ -277,7 +331,16 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
     borderRadius: 8,
     marginBottom: 15,
-    paddingHorizontal: 10
+    paddingHorizontal: 10,
+    justifyContent: 'center'
+  },
+
+  inputText: {
+    color: '#000'
+  },
+
+  placeholderText: {
+    color: '#999'
   },
 
   btn: {
